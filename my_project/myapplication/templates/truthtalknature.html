@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django App</title>
+  <link rel="stylesheet" href="{% static '/static/css/styles.css' %}">
+
+  <a href="{% url 'home' %}"> <button> <i class="fas fa-home"></i> Home</button>  </a>
+  <a href="{% url 'faith' %}"> <button> <i class="fas fa-cross"></i> Faith Verses</button>  </a>
+  <a href="{% url 'hope' %}"> <button> <i class="fas fa-dove"></i> Hope Verses</button>  </a>
+  <a href="{% url 'love' %}"> <button> <i class="fas fa-heart"></i> Love Verses</button>  </a>
+  <a href="{% url 'truthtalknature' %}"> <button> <i class="fas fa-lightbulb"></i>  Purpose Verse </button>  </a>
+</head>
+<body>
+
+
+
+<!--img countdown timer-->
+<section>
+
+  <div class="image-container">
+    <img src="{% static 'images/chat1 (1).png' %}"
+         alt="Chat Image" class="right">
+  </div>
+
+
+</section>
+
+<section>
+  <h1>{{title}}</h1>
+<div class="ner">
+  <h5 id="topics">Loading...</h5>
+
+</div>
+  <section class="scripture">
+
+    <p id="scripture">Loading...</p>
+
+    <br>
+
+
+  </section>
+
+
+  <button onclick="displayRandomVerse()">Next</button>
+
+</section>
+
+<section class="container">
+
+  <h2 class="fade-in">
+    Welcome to
+    <span class="typing"></span>
+  </h2>
+
+</section>
+
+
+<script >
+  // Typing Effect
+  const words = ["Truth", "Talk", "Nature"];
+  let i = 0;
+  let j = 0;
+  let currentWord = "";
+  let isDeleting = false;
+
+  function typeEffect() {
+    const typingElement = document.querySelector(".typing");
+
+    if (i < words.length) {
+      if (!isDeleting && j <= words[i].length) {
+        currentWord = words[i].substring(0, j++);
+      } else if (isDeleting && j >= 0) {
+        currentWord = words[i].substring(0, j--);
+      }
+
+      typingElement.textContent = currentWord;
+
+      let speed = isDeleting ? 100 : 200;
+
+      if (!isDeleting && j === words[i].length) {
+        speed = 1500;
+        isDeleting = true;
+      } else if (isDeleting && j === 0) {
+        isDeleting = false;
+        i++;
+        if (i === words.length) i = 0;
+        speed = 500;
+      }
+
+      setTimeout(typeEffect, speed);
+    }
+  }
+
+  // Start Typing Effect
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(typeEffect, 1000);
+  });
+
+
+</script>
+
+<script>
+
+
+  const verses = [
+    "Study to shew thyself approved unto God, " +
+    "a workman that needeth not to be ashamed, " +
+    "rightly dividing the word of truth.",
+          "Diligent Study – The verse emphasizes the need to study Scripture carefully, ensuring we understand and apply it correctly.",
+          "Dividing Rightly – This means handling the Word with precision, distinguishing between different covenants, dispensations, and contexts.",
+          "Avoiding Misinterpretation – Scripture should be interpreted in light of its historical, doctrinal, and spiritual meanings.",
+          "Being a Faithful Workman – A believer should approach the Bible with reverence, seeking truth rather than personal bias.",
+          "Context Matters – Don't take verses out of context; understand who it was written to and why.",
+          "Scripture Interprets Scripture – Compare passages for a fuller understanding.",
+          "Truth Over Tradition – Follow God's Word over human opinions or traditions.",
+          "Therefore we conclude that a man is justified by faith without the deeds of the law.",
+          "Except ye eat the flesh of the Son of man, and drink his blood, ye have no life in you.",
+          "Not literal! Jesus is speaking spiritually about believing in Him.",
+  ];
+
+  const topic = [
+    "(2 Timothy 2:15 - KJV)"
+  ];
+
+  function displayRandomVerse() {
+    const randomIndex = Math.floor(Math.random() * verses.length);
+    document.getElementById("scripture").innerText = verses[randomIndex];
+  }
+
+  function displayRandomTopic() {
+    const randomIndex = Math.floor(Math.random() * topic.length);
+    document.getElementById("topics").innerText = topic[randomIndex];
+  }
+
+  window.onload = function() {
+    displayRandomVerse();
+    displayRandomTopic();
+
+    setInterval(displayRandomVerse, 10000);  // Change verse every 10 sec
+    setInterval(displayRandomTopic, 10000);  // Change topic every 10 sec
+  };
+
+</script>
+
+<!-- countdown-->
+<script>
+  let countdownElement = document.getElementById("countdown");
+
+  function startCountdown() {
+    let timeLeft = 10; // Reset countdown time
+    countdownElement.textContent = timeLeft;
+
+    let countdownTimer = setInterval(function() {
+      timeLeft--;
+      countdownElement.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdownTimer); // Stop timer at 0
+        countdownElement.textContent = "Restarting...";
+
+        setTimeout(startCountdown, 1); // No delay before restart
+        // Restart after 1s
+      }
+    }, 1000);
+  }
+
+  startCountdown(); // Start countdown on page load
+
+  if (timeLeft <= 0) {
+    clearInterval(countdownTimer);
+    countdownElement.textContent = "Time's up!";
+    window.location.href = "/new-page/"; // Redirect after countdown
+  }
+  let audio = new Audio('alarm.mp3');
+  audio.play();
+</script>
+
+
+
+</body>
+</html>

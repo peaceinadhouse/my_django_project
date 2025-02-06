@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django App</title>
+  <link rel="stylesheet" href="{% static '/static/css/styles.css' %}">
+
+  <a href="{% url 'home' %}"> <button> <i class="fas fa-home"></i> Home</button>  </a>
+  <a href="{% url 'faith' %}"> <button> <i class="fas fa-cross"></i> Faith Verses</button>  </a>
+  <a href="{% url 'hope' %}"> <button> <i class="fas fa-dove"></i> Hope Verses</button>  </a>
+  <a href="{% url 'love' %}"> <button> <i class="fas fa-heart"></i> Love Verses</button>  </a>
+  <a href="{% url 'truthtalknature' %}"> <button> <i class="fas fa-cross"></i> Truth Talk Nature </button>  </a>
+</head>
+<body>
+
+
+
+<!--img countdown timer-->
+<section>
+
+  <div class="image-container">
+    <img src="{% static 'images/chat1 (1).png' %}"
+         alt="Chat Image" class="right">
+  </div>
+
+
+</section>
+
+<section>
+  <h1>{{title}}</h1>
+
+  <section class="scripture">
+    <div id="scripture">Loading...</div>
+    <br>
+    <div>
+      <p> <span id="countdown">10</span> seconds</p>
+    </div>
+
+  </section>
+
+
+  <button onclick="displayRandomVerse()">New Verse</button>
+
+</section>
+<section class="container">
+
+  <h2 class="fade-in">
+    Welcome to
+    <span class="typing"></span>
+  </h2>
+
+</section>
+
+
+<script >
+  // Typing Effect
+  const words = ["Truth", "Talk", "Nature"];
+  let i = 0;
+  let j = 0;
+  let currentWord = "";
+  let isDeleting = false;
+
+  function typeEffect() {
+    const typingElement = document.querySelector(".typing");
+
+    if (i < words.length) {
+      if (!isDeleting && j <= words[i].length) {
+        currentWord = words[i].substring(0, j++);
+      } else if (isDeleting && j >= 0) {
+        currentWord = words[i].substring(0, j--);
+      }
+
+      typingElement.textContent = currentWord;
+
+      let speed = isDeleting ? 100 : 200;
+
+      if (!isDeleting && j === words[i].length) {
+        speed = 1500;
+        isDeleting = true;
+      } else if (isDeleting && j === 0) {
+        isDeleting = false;
+        i++;
+        if (i === words.length) i = 0;
+        speed = 500;
+      }
+
+      setTimeout(typeEffect, speed);
+    }
+  }
+
+  // Start Typing Effect
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(typeEffect, 1000);
+  });
+
+
+</script>
+
+<script>
+
+
+  const verses = [
+    "Psalm 23:1 - The Lord is my shepherd; I shall not want.",
+    "Philippians 4:13 - I can do all things through Christ who strengthens me.",
+    "Jeremiah 29:11 - 'For I know the plans I have for you,' declares the Lord.",
+    "John 3:16 - For God so loved the world that He gave His only Son.",
+    "Proverbs 3:5 - Trust in the Lord with all your heart and lean not on your own understanding.",
+    "Luke 24:25-26 -And He said to them, “O foolish men and slow of heart to believe in all that the prophets have spoken! Was it not necessary for the Christ to suffer these things and to enter into His glory?”",
+    "Luke 24:46 - and He said to them, “Thus it is written, that the Christ would suffer and rise again from the dead the third day,",
+    "Acts 3:18 - But the things which God announced beforehand by the mouth of all the prophets, that His Christ would suffer, He has thus fulfilled.",
+    "Acts 17:2-3 - And according to Paul’s custom, he went to them, and for three Sabbaths reasoned with them from the Scriptures, explaining and giving evidence that the Christ had to suffer and rise again from the dead, and saying, “This Jesus whom I am proclaiming to you is the Christ.”",
+    "Acts 26:22-23 - So, having obtained help from God, I stand to this day testifying both to small and great, stating nothing but what the Prophets and Moses said was going to take place; that the Christ was to suffer, and that by reason of His resurrection from the dead He would be the first to proclaim light both to the Jewish people and to the Gentiles.”",
+    "1 Corinthians 15:3 - For I delivered to you as of first importance what I also received, that Christ died for our sins according to the Scriptures,",
+    "Psalm 2:2 - The kings of the earth take their stand And the rulers take counsel together Against the Lord and against His Anointed, saying,",
+    "Luke 22:15 - And He said to them, “I have earnestly desired to eat this Passover with you before I suffer;",
+    "John 12:27 - “Now My soul has become troubled; and what shall I say, ‘Father, save Me from this hour’? But for this purpose I came to this hour.",
+    "Matthew 4:5 - Then the devil *took Him into the holy city and had Him stand on the pinnacle of the temple,",
+    "John 1:11 - He came to His own, and those who were His own did not receive Him.",
+    "Isaiah 53:1 - Who has believed our message? And to whom has the arm of the Lord been revealed?",
+    "Luke 24:20 - and how the chief priests and our rulers delivered Him to the sentence of death, and crucified Him.",
+    "Luke 22:3 - And Satan entered into Judas who was called Iscariot, belonging to the number of the twelve.",
+  ];
+
+  function displayRandomVerse() {
+    const randomIndex = Math.floor(Math.random() * verses.length);
+    document.getElementById("scripture").innerText = verses[randomIndex];
+  }
+
+  window.onload = function() {
+    displayRandomVerse();
+    setInterval(displayRandomVerse, 10000); // Change verse every 30 seconds
+  };
+</script>
+
+<!-- countdown-->
+<script>
+  let countdownElement = document.getElementById("countdown");
+
+  function startCountdown() {
+    let timeLeft = 10; // Reset countdown time
+    countdownElement.textContent = timeLeft;
+
+    let countdownTimer = setInterval(function() {
+      timeLeft--;
+      countdownElement.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdownTimer); // Stop timer at 0
+        countdownElement.textContent = "Restarting...";
+
+        setTimeout(startCountdown, 1); // No delay before restart
+        // Restart after 1s
+      }
+    }, 1000);
+  }
+
+  startCountdown(); // Start countdown on page load
+
+  if (timeLeft <= 0) {
+    clearInterval(countdownTimer);
+    countdownElement.textContent = "Time's up!";
+    window.location.href = "/new-page/"; // Redirect after countdown
+  }
+  let audio = new Audio('alarm.mp3');
+  audio.play();
+</script>
+
+
+
+</body>
+</html>

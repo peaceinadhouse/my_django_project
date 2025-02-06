@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django App</title>
+  <link rel="stylesheet" href="{% static '/static/css/styles.css' %}">
+
+  <a href="{% url 'home' %}"> <button> <i class="fas fa-home"></i> Home </button>  </a>
+  <a href="{% url 'faith' %}"> <button> <i class="fas fa-cross"></i> Faith Verses</button>  </a>
+  <a href="{% url 'love' %}"> <button> <i class="fas fa-heart"></i> Love Verses</button>  </a>
+  <a href="{% url 'purpose' %}"> <button> <i class="fas fa-lightbulb"></i> Purpose Verses</button>  </a>
+  <a href="{% url 'truthtalknature' %}"> <button> <i class="fas fa-cross"></i> Truth Talk Nature </button>  </a>
+</head>
+<body>
+<!--img countdown timer-->
+<section>
+
+  <div class="image-container">
+    <img src="{% static 'images/chat1 (1).png' %}"
+         alt="Chat Image" class="right">
+  </div>
+
+
+</section>
+
+<section>
+  <h1>{{title}}</h1>
+
+
+  <section class="scripture">
+    <div id="scripture">Loading...</div>
+    <br>
+    <div>
+      <p> <span id="countdown">10</span> seconds</p>
+    </div>
+  </section>
+
+
+  <button onclick="displayRandomVerse()">New Verse</button>
+
+</section>
+<section class="container">
+
+  <h2 class="fade-in">
+    Welcome to
+    <span class="typing"></span>
+  </h2>
+
+</section>
+
+<script >
+  // Typing Effect
+  const words = ["Truth", "Talk", "Nature"];
+  let i = 0;
+  let j = 0;
+  let currentWord = "";
+  let isDeleting = false;
+
+  function typeEffect() {
+    const typingElement = document.querySelector(".typing");
+
+    if (i < words.length) {
+      if (!isDeleting && j <= words[i].length) {
+        currentWord = words[i].substring(0, j++);
+      } else if (isDeleting && j >= 0) {
+        currentWord = words[i].substring(0, j--);
+      }
+
+      typingElement.textContent = currentWord;
+
+      let speed = isDeleting ? 100 : 200;
+
+      if (!isDeleting && j === words[i].length) {
+        speed = 1500;
+        isDeleting = true;
+      } else if (isDeleting && j === 0) {
+        isDeleting = false;
+        i++;
+        if (i === words.length) i = 0;
+        speed = 500;
+      }
+
+      setTimeout(typeEffect, speed);
+    }
+  }
+
+  // Start Typing Effect
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(typeEffect, 1000);
+  });
+
+
+</script>
+
+<script>
+  const verses = [
+    "Romans 15:13 – Now the God of hope fill you with all joy and peace in believing, that ye may abound in hope, through the power of the Holy Ghost.",
+    "Romans 5:5 – And hope maketh not ashamed; because the love of God is shed abroad in our hearts by the Holy Ghost which is given unto us.",
+
+    "Jeremiah 29:11 – For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.",
+    "Psalm 39:7 – And now, Lord, what wait I for? my hope is in thee.",
+    "Hebrews 10:23 – Let us hold fast the profession of our faith without wavering; (for he is faithful that promised;)",
+    "Colossians 1:27 – To whom God would make known what is the riches of the glory of this mystery among the Gentiles; which is Christ in you, the hope of glory.",
+    "1 Peter 1:3 – Blessed be the God and Father of our Lord Jesus Christ, which according to his abundant mercy hath begotten us again unto a lively hope by the resurrection of Jesus Christ from the dead.",
+    "Titus 2:13 – Looking for that blessed hope, and the glorious appearing of the great God and our Saviour Jesus Christ.",
+    "Romans 8:24-25 – For we are saved by hope: but hope that is seen is not hope: for what a man seeth, why doth he yet hope for? But if we hope for that we see not, then do we with patience wait for it.",
+    "Philippians 1:20-21 – According to my earnest expectation and my hope, that in nothing I shall be ashamed, but that with all boldness, as always, so now also Christ shall be magnified in my body, whether it be by life, or by death. For to me to live is Christ, and to die is gain.",
+    "1 Corinthians 13:13 – And now abideth faith, hope, charity, these three; but the greatest of these is charity.",
+    "1 Timothy 1:1 – Paul, an apostle of Jesus Christ by the commandment of God our Saviour, and Lord Jesus Christ, which is our hope.",
+    "Isaiah 40:31 – But they that wait upon the Lord shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.",
+    "Psalm 71:5 – For thou art my hope, O Lord God: thou art my trust from my youth.",
+    "Psalm 33:18 – Behold, the eye of the Lord is upon them that fear him, upon them that hope in his mercy.",
+    "Romans 12:12 – Rejoicing in hope; patient in tribulation; continuing instant in prayer.",
+    "Ephesians 1:18 – The eyes of your understanding being enlightened; that ye may know what is the hope of his calling, and what the riches of the glory of his inheritance in the saints.",
+    "2 Thessalonians 2:16-17 – Now our Lord Jesus Christ himself, and God, even our Father, which hath loved us, and hath given us everlasting consolation and good hope through grace, Comfort your hearts, and stablish you in every good word and work.",
+    "Lamentations 3:24 – The Lord is my portion, saith my soul; therefore will I hope in him.",
+    "Psalm 130:5 – I wait for the Lord, my soul doth wait, and in his word do I hope.",
+    "Psalm 25:5 – Lead me in thy truth, and teach me: for thou art the God of my salvation; on thee do I wait all the day.",
+    "Psalm 147:11 – The Lord taketh pleasure in them that fear him, in those that hope in his mercy.",
+    "Isaiah 25:9 – And it shall be said in that day, Lo, this is our God; we have waited for him, and he will save us: this is the Lord; we have waited for him, we will be glad and rejoice in his salvation.",
+    "Psalm 42:11 – Why art thou cast down, O my soul? and why art thou disquieted within me? hope thou in God: for I shall yet praise him, who is the health of my countenance, and my God.",
+    "Psalm 146:5 – Happy is he that hath the God of Jacob for his help, whose hope is in the Lord his God.",
+    "Isaiah 8:17 – And I will wait upon the Lord, that hideth his face from the house of Jacob, and I will look for him.",
+    "Micah 7:7 – Therefore I will look unto the Lord; I will wait for the God of my salvation: my God will hear me.",
+    "Proverbs 23:18 – For surely there is an end; and thine expectation shall not be cut off.",
+    "Romans 15:4 – For whatsoever things were written aforetime were written for our learning, that we through patience and comfort of the scriptures might have hope.",
+    "Romans 8:20-21 – For the creature was made subject to vanity, not willingly, but by reason of him who hath subjected the same in hope, Because the creature itself also shall be delivered from the bondage of corruption into the glorious liberty of the children of God.",
+    "Jeremiah 17:7 – Blessed is the man that trusteth in the Lord, and whose hope the Lord is.",
+    "1 John 3:3 – And every man that hath this hope in him purifieth himself, even as he is pure.",
+    "Psalm 119:74 – They that fear thee will be glad when they see me; because I have hoped in thy word.",
+    "Psalm 9:18 – For the needy shall not alway be forgotten: the expectation of the poor shall not perish for ever.",
+    "Psalm 71:14 – But I will hope continually, and will yet praise thee more and more.",
+    "Psalm 25:21 – Let integrity and uprightness preserve me; for I wait on thee",
+    "Romans 5:2 – By whom also we have access by faith into this grace wherein we stand, and rejoice in hope of the glory of God.",
+    "1 Timothy 6:17 – Charge them that are rich in this world, that they be not highminded, nor trust in uncertain riches, but in the living God, who giveth us richly all things to enjoy.",
+    "Psalm 62:5 – My soul, wait thou only upon God; for my expectation is from him.",
+    "Hebrews 6:19 – Which hope we have as an anchor of the soul, both sure and stedfast, and which entereth into that within the veil.",
+    "2 Corinthians 3:12 – Seeing then that we have such hope, we use great plainness of speech.",
+    "2 Corinthians 4:18 – While we look not at the things which are seen, but at the things which are not seen: for the things which are seen are temporal; but the things which are not seen are eternal.",
+    "Psalm 130:7 – Let Israel hope in the Lord: for with the Lord there is mercy, and with him is plenteous redemption.",
+    "Psalm 18:2 – The Lord is my rock, and my fortress, and my deliverer; my God, my strength, in whom I will trust; my buckler, and the horn of my salvation, and my high tower.",
+    "Psalm 28:7 – The Lord is my strength and my shield; my heart trusted in him, and I am helped: therefore my heart greatly rejoiceth; and with my song will I praise him.",
+    "1 Thessalonians 5:8 – But let us, who are of the day, be sober, putting on the breastplate of faith and love; and for an helmet, the hope of salvation",
+    "Psalm 25:3 – Yea, let none that wait on thee be ashamed: let them be ashamed which transgress without cause.",
+    "Isaiah 40:29 – He giveth power to the faint; and to them that have no might he increaseth strength.",
+    "Psalm 46:1-2 – God is our refuge and strength, a very present help in trouble. Therefore will not we fear, though the earth be removed, and though the mountains be carried into the midst of the sea.",
+    "Psalm 62:6-7 – He only is my rock and my salvation: he is my defence; I shall not be moved. In God is my salvation and my glory: the rock of my strength, and my refuge, is in God.",
+    "Psalm 130:6 – My soul waiteth for the Lord more than they that watch for the morning: I say, more than they that watch for the morning.",
+    "Romans 8:28 – And we know that all things work together for good to them that love God, to them who are the called according to his purpose.",
+    "Isaiah 33:6 – And wisdom and knowledge shall be the stability of thy times, and strength of salvation: the fear of the Lord is his treasure",
+    "Isaiah 51:5 – My righteousness is near; my salvation is gone forth, and mine arms shall judge the people; the isles shall wait upon me, and on mine arm shall they trust.",
+    "1 Peter 3:15 – But sanctify the Lord God in your hearts: and be ready always to give an answer to every man that asketh you a reason of the hope that is in you with meekness and fear.",
+    "Lamentations 3:24 – The Lord is my portion, saith my soul; therefore will I hope in him",
+    "Matthew 12:21 – And in his name shall the Gentiles trust.",
+    "Romans 8:16 – The Spirit itself beareth witness with our spirit, that we are the children of God.",
+    "John 14:18 – I will not leave you comfortless: I will come to you.",
+    "Titus 3:7 – That being justified by his grace, we should be made heirs according to the hope of eternal life",
+    "Hebrews 10:36 – For ye have need of patience, that, after ye have done the will of God, ye might receive the promise.",
+    "Romans 15:4 – For whatsoever things were written aforetime were written for our learning, that we through patience and comfort of the scriptures might have hope.",
+    "Romans 5:1-2 – Therefore being justified by faith, we have peace with God through our Lord Jesus Christ: By whom also we have access by faith into this grace wherein we stand, and rejoice in hope of the glory of God.",
+    "Romans 11:33 – O the depth of the riches both of the wisdom and knowledge of God! how unsearchable are his judgments, and his ways past finding out!",
+    "Hebrews 12:2 – Looking unto Jesus the author and finisher of our faith; who for the joy that was set before him endured the cross, despising the shame, and is set down at the right hand of the throne of God",
+
+  ];
+
+  function displayRandomVerse() {
+    const randomIndex = Math.floor(Math.random() * verses.length);
+    document.getElementById("scripture").innerText = verses[randomIndex];
+  }
+
+  window.onload = function() {
+    displayRandomVerse();
+    setInterval(displayRandomVerse, 10000); // Change verse every 30 seconds
+  };
+</script>
+
+<!-- countdown-->
+<script>
+  let countdownElement = document.getElementById("countdown");
+
+  function startCountdown() {
+    let timeLeft = 10; // Reset countdown time
+    countdownElement.textContent = timeLeft;
+
+    let countdownTimer = setInterval(function() {
+      timeLeft--;
+      countdownElement.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdownTimer); // Stop timer at 0
+        countdownElement.textContent = "Restarting...";
+
+        setTimeout(startCountdown, 1); // No delay before restart
+        // Restart after 1s
+      }
+    }, 1000);
+  }
+
+  startCountdown(); // Start countdown on page load
+
+  if (timeLeft <= 0) {
+    clearInterval(countdownTimer);
+    countdownElement.textContent = "Time's up!";
+    window.location.href = "/new-page/"; // Redirect after countdown
+  }
+  let audio = new Audio('alarm.mp3');
+  audio.play();
+</script>
+</body>
+</html>

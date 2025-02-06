@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django App</title>
+  <link rel="stylesheet" href="{% static '/static/css/styles.css' %}">
+
+  <a href="{% url 'home' %}"> <button> <i class="fas fa-home"></i> Home</button>  </a>
+  <a href="{% url 'faith' %}"> <button> <i class="fas fa-cross"></i> Faith Verses</button>  </a>
+  <a href="{% url 'hope' %}"> <button> <i class="fas fa-dove"></i> Hope Verses</button>  </a>
+  <a href="{% url 'purpose' %}"> <button> <i class="fas fa-lightbulb"></i> Purpose Verses</button>  </a>
+  <a href="{% url 'truthtalknature' %}"> <button> <i class="fas fa-cross"></i> Truth Talk Nature </button>  </a>
+</head>
+<body>
+<!--img countdown timer-->
+<section>
+
+  <div class="image-container">
+    <img src="{% static 'images/chat1 (1).png' %}"
+         alt="Chat Image" class="right">
+  </div>
+
+
+</section>
+
+<section>
+  <h1>{{title}}</h1>
+
+  <section class="scripture">
+    <div id="scripture">Loading...</div>
+    <br>
+    <div>
+      <p> <span id="countdown">10</span> seconds</p>
+    </div>
+
+  </section>
+
+
+  <button onclick="displayRandomVerse()">New Verse</button>
+
+</section>
+      <section class="container">
+
+        <h2 class="fade-in">
+          Welcome to
+          <span class="typing"></span>
+        </h2>
+
+      </section>
+<script >
+  // Typing Effect
+  const words = ["Truth", "Talk", "Nature"];
+  let i = 0;
+  let j = 0;
+  let currentWord = "";
+  let isDeleting = false;
+
+  function typeEffect() {
+    const typingElement = document.querySelector(".typing");
+
+    if (i < words.length) {
+      if (!isDeleting && j <= words[i].length) {
+        currentWord = words[i].substring(0, j++);
+      } else if (isDeleting && j >= 0) {
+        currentWord = words[i].substring(0, j--);
+      }
+
+      typingElement.textContent = currentWord;
+
+      let speed = isDeleting ? 100 : 200;
+
+      if (!isDeleting && j === words[i].length) {
+        speed = 1500;
+        isDeleting = true;
+      } else if (isDeleting && j === 0) {
+        isDeleting = false;
+        i++;
+        if (i === words.length) i = 0;
+        speed = 500;
+      }
+
+      setTimeout(typeEffect, speed);
+    }
+  }
+
+  // Start Typing Effect
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(typeEffect, 1000);
+  });
+
+
+</script>
+
+<script>
+  const verses = [
+    "John 3:16 - For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",
+    "1 John 4:9-10 - In this was manifested the love of God toward us, because that God sent his only begotten Son into the world, that we might live through him. Herein is love, not that we loved God, but that he loved us, and sent his Son to be the propitiation for our sins.",
+    "Romans 5:8 - But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us.",
+    "1 Corinthians 13:4-7 - Love suffereth long, and is kind; love envieth not; love vaunteth not itself, is not puffed up, doth not behave itself unseemly, seeketh not her own, is not easily provoked, thinketh no evil; rejoiceth not in iniquity, but rejoiceth in the truth; beareth all things, believeth all things, hopeth all things, endureth all things.",
+    "Ephesians 5:2 - And walk in love, as Christ also hath loved us, and hath given himself for us an offering and a sacrifice to God for a sweet-smelling savour.",
+    "John 15:13 - Greater love hath no man than this, that a man lay down his life for his friends.",
+    "1 John 4:19 - We love him, because he first loved us.",
+    "Ephesians 3:17-19 - That Christ may dwell in your hearts by faith; that ye, being rooted and grounded in love, may be able to comprehend with all saints what is the breadth, and length, and depth, and height; and to know the love of Christ, which passeth knowledge, that ye might be filled with all the fullness of God.",
+    "1 Corinthians 13:13- And now abideth faith, hope, charity, these three; but the greatest of these is charity.",
+    "Romans 13:10 - Love worketh no ill to his neighbour: therefore love is the fulfilling of the law.",
+    "1 John 4:7-8 - Beloved, let us love one another: for love is of God; and every one that loveth is born of God, and knoweth God. He that loveth not knoweth not God; for God is love.",
+    "Matthew 22:37-39 - Jesus said unto him, Thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind. This is the first and great commandment. And the second is like unto it, Thou shalt love thy neighbour as thyself.",
+    "1 Peter 4:8 - And above all things have fervent charity among yourselves: for charity shall cover the multitude of sins.",
+    "1 John 3:16 - Hereby perceive we the love of God, because he laid down his life for us: and we ought to lay down our lives for the brethren.",
+    "Romans 8:39 - Nor height, nor depth, nor any other creature shall be able to separate us from the love of God, which is in Christ Jesus our Lord.",
+    "Proverbs 10:12 - Hatred stirreth up strifes: but love covereth all sins.",
+    "1 John 4:16 - And we have known and believed the love that God hath to us. God is love; and he that dwelleth in love dwelleth in God, and God in him.",
+    "2 Corinthians 5:14 - For the love of Christ constraineth us; because we thus judge, that if one died for all, then were all dead",
+    "Colossians 3:14 - And above all these things put on charity, which is the bond of perfectness.",
+    "Luke 10:27 - And he answering said, Thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy strength, and with all thy mind; and thy neighbour as thyself.",
+    "Mark 12:30-31 - And thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind, and with all thy strength: this is the first commandment. And the second is like, namely this, Thou shalt love thy neighbour as thyself. There is none other commandment greater than these.",
+    "1 John 2:5 - But whoso keepeth his word, in him verily is the love of God perfected: hereby know we that we are in him.",
+    "Romans 13:8 - Owe no man any thing, but to love one another: for he that loveth another hath fulfilled the law.",
+    "1 John 3:1 - Behold, what manner of love the Father hath bestowed upon us, that we should be called the sons of God: therefore the world knoweth us not, because it knew him not.",
+    "Song of Solomon 8:7 - Many waters cannot quench love, neither can the floods drown it: if a man would give all the substance of his house for love, it would utterly be contemned.",
+    "Romans 5:5 - And hope maketh not ashamed; because the love of God is shed abroad in our hearts by the Holy Ghost which is given unto us.",
+    "Matthew 5:44 - But I say unto you, Love your enemies, bless them that curse you, do good to them that hate you, and pray for them which despitefully use you, and persecute you.",
+    "Luke 6:27 - But I say unto you which hear, Love your enemies, do good to them which hate you.",
+    "Hebrews 13:1 - Let brotherly love continue.",
+    "1 Peter 1:22 -Seeing ye have purified your souls in obeying the truth through the Spirit unto unfeigned love of the brethren, see that ye love one another with a pure heart fervently.",
+    "Philippians 1:9 - And this I pray, that your love may abound yet more and more in knowledge and in all judgment.",
+    "John 14:15 - If ye love me, keep my commandments.",
+    "John 14:21- He that hath my commandments, and keepeth them, he it is that loveth me: and he that loveth me shall be loved of my Father, and I will love him, and will manifest myself to him.",
+    "John 14:23 - Jesus answered and said unto him, If a man love me, he will keep my words: and my Father will love him, and we will come unto him, and make our abode with him.",
+    "1 John 5:3 - For this is the love of God, that we keep his commandments: and his commandments are not grievous.",
+    "Ephesians 4:2 - With all lowliness and meekness, with longsuffering, forbearing one another in love.",
+    "Philippians 2:2 - Fulfil ye my joy, that ye be like-minded, having the same love, being of one accord, of one mind.",
+    "1 Corinthians 16:14 - Let all your things be done with charity.",
+    "Matthew 22:37 - Jesus said unto him, Thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind.",
+    "John 15:9 - As the Father hath loved me, so have I loved you: continue ye in my love.",
+    "1 John 4:11 - Beloved, if God so loved us, we ought also to love one another.",
+    "Romans 12:9 - Let love be without dissimulation. Abhor that which is evil; cleave to that which is good.",
+    "2 John 1:6 - And this is love, that we walk after his commandments. This is the commandment, That, as ye have heard from the beginning, ye should walk in it.",
+    "Romans 8:35 - Who shall separate us from the love of Christ? shall tribulation, or distress, or persecution, or famine, or nakedness, or peril, or sword?",
+    "1 Timothy 1:5 - Now the end of the commandment is charity out of a pure heart, and of a good conscience, and of faith unfeigned.",
+    "Galatians 5:6 - For in Jesus Christ neither circumcision availeth anything, nor uncircumcision; but faith which worketh by love.",
+    "Colossians 2:2 - That their hearts might be comforted, being knit together in love, and unto all riches of the full assurance of understanding, to the acknowledgment of the mystery of God, and of the Father, and of Christ.",
+    "1 John 3:18 - My little children, let us not love in word, neither in tongue; but in deed and in truth.",
+    "1 Corinthians 13:4 - Love suffereth long, and is kind; love envieth not; love vaunteth not itself, is not puffed up.",
+    "James 2:8 - If ye fulfil the royal law according to the scripture, Thou shalt love thy neighbour as thyself, ye do well.",
+    "1 Thessalonians 4:9 - But as touching brotherly love ye need not that I write unto you: for ye yourselves are taught of God to love one another.",
+    "Titus 2:4 - That they may teach the young women to be sober, to love their husbands, to love their children.",
+    "Luke 7:47 - Wherefore I say unto thee, Her sins, which are many, are forgiven; for she loved much: but to whom little is forgiven, the same loveth little.",
+    "1 John 2:10 - He that loveth his brother abideth in the light, and there is none occasion of stumbling in him.",
+    "1 Corinthians 13:8 - Charity never faileth: but whether there be prophecies, they shall fail; whether there be tongues, they shall cease; whether there be knowledge, it shall vanish away.",
+    "Luke 11:42 - But woe unto you, Pharisees! for ye tithe mint and rue and all manner of herbs, and pass over judgment and the love of God: these ought ye to have done, and not to leave the other undone.",
+    "John 13:34-35 - A new commandment I give unto you, That ye love one another; as I have loved you, that ye also love one another. By this shall all men know that ye are my disciples, if ye have love one to another.",
+    "Romans 8:28 - And we know that all things work together for good to them that love God, to them who are the called according to his purpose.",
+    "Revelation 2:4 - Nevertheless I have somewhat against thee, because thou hast left thy first love.",
+    "Romans 5:5 - And hope maketh not ashamed; because the love of God is shed abroad in our hearts by the Holy Ghost which is given unto us.",
+    "Hebrews 6:10 - For God is not unrighteous to forget your work and labour of love, which ye have shewed toward his name, in that ye have ministered to the saints, and do minister.",
+    "Matthew 6:24 - No man can serve two masters: for either he will hate the one, and love the other; or else he will hold to the one, and despise the other.",
+    "Matthew 10:37 - He that loveth father or mother more than me is not worthy of me: and he that loveth son or daughter more than me is not worthy of me.",
+    "Philippians 1:9 - And this I pray, that your love may abound yet more and more in knowledge and in all judgment.",
+    "Philippians 1:8 - For God is my record, how greatly I long after you all in the bowels of Jesus Christ.",
+    "John 15:12 - This is my commandment, That ye love one another, as I have loved you.",
+    "Titus 3:4-5 - But after that the kindness and love of God our Saviour toward man appeared, not by works of righteousness which we have done, but according to his mercy he saved us, by the washing of regeneration, and renewing of the Holy Ghost.",
+    "Luke 7:47 - Wherefore I say unto thee, Her sins, which are many, are forgiven; for she loved much: but to whom little is forgiven, the same loveth little.",
+    "Romans 8:39 - Nor height, nor depth, nor any other creature shall be able to separate us from the love of God, which is in Christ Jesus our Lord.",
+    "Matthew 22:39 - And the second is like unto it, Thou shalt love thy neighbour as thyself.",
+    "1 John 5:1 - Whosoever believeth that Jesus is the Christ is born of God: and every one that loveth him that begat loveth him also that is begotten of him.",
+    "Romans 14:15 - But if thy brother be grieved with thy meat, now walkest thou not charitably. Destroy not him with thy meat, for whom Christ died.",
+    "Luke 11:42 - But woe unto you, Pharisees! for ye tithe mint and rue and all manner of herbs, and pass over judgment and the love of God: these ought ye to have done, and not to leave the other undone.",
+    "John 13:35 - By this shall all men know that ye are my disciples, if ye have love one to another.",
+    "Luke 6:32-34 - For if ye love them which love you, what thank have ye? for sinners also love those that love them. And if ye do good to them which do good to you, what thank have ye? for sinners also do even the same.",
+    "John 21:15-17 - So when they had dined, Jesus saith to Simon Peter, Simon, son of Jonas, lovest thou me more than these? He saith unto him, Yea, Lord; thou knowest that I love thee. He saith unto him, Feed my lambs.",
+    "Philippians 2:2 - Fulfil ye my joy, that ye be like-minded, having the same love, being of one accord, of one mind.",
+    "Matthew 10:37 - He that loveth father or mother more than me is not worthy of me: and he that loveth son or daughter more than me is not worthy of me.",
+    "Romans 8:39 - Nor height, nor depth, nor any other creature shall be able to separate us from the love of God, which is in Christ Jesus our Lord.",
+    "1 John 4:11 - Beloved, if God so loved us, we ought also to love one another.",
+    "John 14:15 - If ye love me, keep my commandments.",
+    "Romans 8:35 - Who shall separate us from the love of Christ? shall tribulation, or distress, or persecution, or famine, or nakedness, or peril, or sword?",
+    "John 15:12 - This is my commandment, That ye love one another, as I have loved you.",
+    "Ephesians 3:19 - And to know the love of Christ, which passeth knowledge, that ye might be filled with all the fullness of God.",
+
+  ];
+
+  function displayRandomVerse() {
+    const randomIndex = Math.floor(Math.random() * verses.length);
+    document.getElementById("scripture").innerText = verses[randomIndex];
+  }
+
+  window.onload = function() {
+    displayRandomVerse();
+    setInterval(displayRandomVerse, 10000); // Change verse every 30 seconds
+  };
+</script>
+<!-- countdown-->
+<script>
+  let countdownElement = document.getElementById("countdown");
+
+  function startCountdown() {
+    let timeLeft = 10; // Reset countdown time
+    countdownElement.textContent = timeLeft;
+
+    let countdownTimer = setInterval(function() {
+      timeLeft--;
+      countdownElement.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdownTimer); // Stop timer at 0
+        countdownElement.textContent = "Restarting...";
+
+        setTimeout(startCountdown, 1); // No delay before restart
+        // Restart after 1s
+      }
+    }, 1000);
+  }
+
+  startCountdown(); // Start countdown on page load
+
+  if (timeLeft <= 0) {
+    clearInterval(countdownTimer);
+    countdownElement.textContent = "Time's up!";
+    window.location.href = "/new-page/"; // Redirect after countdown
+  }
+  let audio = new Audio('alarm.mp3');
+  audio.play();
+</script>
+</body>
+</html>
